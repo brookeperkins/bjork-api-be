@@ -52,4 +52,66 @@ describe('bjork-api-be routes', () => {
         });
       });
   });
+
+  it('gets an outfit by id', async() => {
+    const outfit = await Outfit.insert({
+      img: 'BjorkPic.jpg',
+      year: 2018,
+      quote: 'This is a quote.'
+    });
+
+    return request(app)
+      .get(`/outfits/${outfit.id}`)
+      .then(res => {
+        expect(res.body).toEqual({
+          id: expect.any(String),
+          img: 'BjorkPic.jpg',
+          year: 2018,
+          quote: 'This is a quote.'
+        });
+      });
+  });
+
+  it('updates an outfit by id', async() => {
+    const outfit = await Outfit.insert({
+      img: 'BjorkDress.jpg',
+      year: 2014,
+      quote: 'This is another quote.'
+    });
+
+    return request(app)
+      .put(`/outfits/${outfit.id}`)
+      .send({
+        img: 'ADifferentDress.jpg',
+        year: 2011,
+        quote: 'This is a new quote.'
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          id: expect.any(String),
+          img: 'ADifferentDress.jpg',
+          year: 2011,
+          quote: 'This is a new quote.'
+        });
+      });
+  });
+
+  it('deletes an outfit by id', async() => {
+    const outfit = await Outfit.insert({
+      img: 'BjorkPic.jpg',
+      year: 2014,
+      quote: 'This is a quote.'
+    });
+
+    return request(app)
+      .delete(`/outfits/${outfit.id}`)
+      .then(res => {
+        expect(res.body).toEqual({
+          id: expect.any(String),
+          img: 'BjorkPic.jpg',
+          year: 2014,
+          quote: 'This is a quote.'
+        });
+      }); 
+  });
 });
