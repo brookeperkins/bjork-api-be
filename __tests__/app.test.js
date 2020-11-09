@@ -11,7 +11,7 @@ describe('bjork-api-be routes', () => {
 
   it('creates a new bjork outfit entry', () => {
     return request(app)
-      .post('/api/outfits')
+      .post('/outfits')
       .send({
         img: 'bjork.jpg',
         year: 1995,
@@ -45,7 +45,7 @@ describe('bjork-api-be routes', () => {
     }].map(outfit => Outfit.insert(outfit)));
 
     return request(app)
-      .get('/api/outfits')
+      .get('/outfits')
       .then(res => {
         outfits.forEach(outfit => {
           expect(res.body).toContainEqual(outfit);
